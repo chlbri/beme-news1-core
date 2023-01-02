@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { z } from 'zod';
 import { categorySchema } from './Category';
 import { languageSchema } from './Language';
@@ -16,6 +17,7 @@ export const articleSchema = z
   .transform(article => ({
     ...article,
     publishedAt: new Date(article.publishedAt),
+    id: nanoid(13),
   }));
 
 export type ArticleJSON = z.input<typeof articleSchema>;

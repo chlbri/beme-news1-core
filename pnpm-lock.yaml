@@ -8,6 +8,7 @@ specifiers:
   eslint: ^8.29.0
   husky: ^8.0.2
   immer: ^9.0.16
+  nanoid: ^4.0.0
   onchange: ^7.1.0
   pnpm: ^7.18.2
   prettier: ^2.8.1
@@ -28,18 +29,15 @@ specifiers:
   xstate: ^4.35.1
   zod: ^3.20.2
 
-dependencies:
-  '@xstate/immer': 0.3.1_immer@9.0.16+xstate@4.35.1
-  immer: 9.0.16
-  xstate: 4.35.1
-  zod: 3.20.2
-
 devDependencies:
   '@types/node': 18.11.18
   '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
   '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
+  '@xstate/immer': 0.3.1_immer@9.0.16+xstate@4.35.1
   eslint: 8.30.0
   husky: 8.0.2
+  immer: 9.0.16
+  nanoid: 4.0.0
   onchange: 7.1.0
   pnpm: 7.19.0
   prettier: 2.8.1
@@ -57,6 +55,8 @@ devDependencies:
   vite: 3.2.4_@types+node@18.11.18
   vite-tsconfig-paths: 4.0.3_m3jmvq3awxyuuiknunpckf2yo4
   vitest: 0.25.2
+  xstate: 4.35.1
+  zod: 3.20.2
 
 packages:
 
@@ -354,7 +354,7 @@ packages:
     dependencies:
       immer: 9.0.16
       xstate: 4.35.1
-    dev: false
+    dev: true
 
   /acorn-jsx/5.3.2_acorn@8.8.1:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -1145,7 +1145,7 @@ packages:
 
   /immer/9.0.16:
     resolution: {integrity: sha512-qenGE7CstVm1NrHQbMh8YaSzTZTFNP3zPqr3YU0S0UY441j4bJTg4A2Hh5KAhwgaiU6ZZ1Ar6y/2f4TblnMReQ==}
-    dev: false
+    dev: true
 
   /import-fresh/3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -1348,6 +1348,12 @@ packages:
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: true
+
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
     hasBin: true
     dev: true
 
@@ -1996,7 +2002,7 @@ packages:
 
   /xstate/4.35.1:
     resolution: {integrity: sha512-imxk6+76HJRt7qHrUnWnAjaHHhAsUKoVa+PXkyaPd3Gll0VjZsy6/L+FkatIJnjI5Kpwp0R8k63KfIFnzVLskQ==}
-    dev: false
+    dev: true
 
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
@@ -2014,4 +2020,4 @@ packages:
 
   /zod/3.20.2:
     resolution: {integrity: sha512-1MzNQdAvO+54H+EaK5YpyEy0T+Ejo/7YLHS93G3RnYWh5gaotGHwGeN/ZO687qEDU2y4CdStQYXVHIgrUl5UVQ==}
-    dev: false
+    dev: true
