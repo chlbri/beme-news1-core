@@ -59,7 +59,7 @@ export const MainMachine = createMachine({
                     ],
                   },
                   on: {
-                    QUERY: {
+                    'SEARCH.QUERY': {
                       actions: 'forwardQuery',
                       description: 'Forward with parameters',
                     },
@@ -85,7 +85,7 @@ export const MainMachine = createMachine({
             },
           },
           on: {
-            INPUT: {
+            'SEARCH.INPUT': {
               target: '.checking',
               actions: 'setInput',
             },

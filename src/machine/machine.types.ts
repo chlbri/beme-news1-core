@@ -8,4 +8,6 @@ export type Context = {
 export type Events =
   | { type: 'NAVIGATE.POP' }
   | { type: 'NAVIGATE.PUSH' }
-  | { type: 'NAVIGATE.POP' };
+  | { type: 'NAVIGATE.POP' }
+  | { type: 'SEARCH.QUERY' }
+  | { type: 'SEARCH.INPUT' };
