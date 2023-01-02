@@ -1,4 +1,5 @@
-name: Publish on NPM (Continuous Delivery)
+name: Publish on Github Package (Continuous Delivery)
+
 on:
   push:
     branches:
@@ -7,17 +8,12 @@ on:
 
 jobs:
   publish:
-    name: Publish
+    name: publish
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-
-      - name: 'Install node'
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.2
@@ -43,10 +39,17 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
-      - name: Publish
-        uses: JS-DevTools/npm-publish@v1
+      - name: Setup node for publication
+        uses: actions/setup-node@v3
         with:
-          token: ${{ secrets.NPM_TOKEN }}
-          access: public
+          node-version: '16.x'
+          registry-url: 'https://npm.pkg.github.com'
+          always-auth: true
+          # Defaults to the user or organization that owns the workflow file
+          scope: '@chlbri'
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
