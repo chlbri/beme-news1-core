@@ -38,6 +38,8 @@
     "p-q": "pretty-quick --staged --pattern \"**/*.*(ts|tsx)\""
   },
   "devDependencies": {
+    "@bemedev/x-test": "0.2.3",
+    "@faker-js/faker": "^7.6.0",
     "@types/node": "^18.11.18",
     "@typescript-eslint/eslint-plugin": "^5.46.1",
     "@typescript-eslint/parser": "^5.46.1",
@@ -69,8 +71,8 @@
   "peerDependencies": {
     "@xstate/immer": "^0.3.1",
     "immer": "^9.0.16",
+    "nanoid": "^4.0.0",
     "xstate": "^4.35.1",
-    "zod": "^3.20.2",
-    "nanoid": "^4.0.0"
+    "zod": "^3.20.2"
   }
 }

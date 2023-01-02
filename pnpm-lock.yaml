@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@bemedev/x-test': 0.2.3
+  '@faker-js/faker': ^7.6.0
   '@types/node': ^18.11.18
   '@typescript-eslint/eslint-plugin': ^5.46.1
   '@typescript-eslint/parser': ^5.46.1
@@ -30,6 +32,8 @@ specifiers:
   zod: ^3.20.2
 
 devDependencies:
+  '@bemedev/x-test': 0.2.3_xstate@4.35.1
+  '@faker-js/faker': 7.6.0
   '@types/node': 18.11.18
   '@typescript-eslint/eslint-plugin': 5.47.0_ncmi6noazr3nzas7jxykisekym
   '@typescript-eslint/parser': 5.47.0_lzzuuodtsqwxnvqeq4g4likcqa
@@ -59,6 +63,30 @@ devDependencies:
   zod: 3.20.2
 
 packages:
+
+  /@bemedev/decompose/0.1.6:
+    resolution: {integrity: sha512-l2hxdLELzOQNEzdic5kwN3issGGbAGDI84qvUIGy4+LZES8sARYoklBSUay5x0rn4ZogsmlNdYHSZ4w9IRhZOQ==}
+    engines: {node: '>=12'}
+    dev: true
+
+  /@bemedev/x-matches/0.0.3:
+    resolution: {integrity: sha512-HdFJrJPG4WKrskoeHvOqqjyep1PeqVgw33BZ2iDXCKtFQOFzrFkbiRP/ksFmw3IFTNFbXDUq88xiinVWz9QeoQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@bemedev/decompose': 0.1.6
+    dev: true
+
+  /@bemedev/x-test/0.2.3_xstate@4.35.1:
+    resolution: {integrity: sha512-gv2kga7Xm0h8wE6w89RopYWPBeBKn+8NV//z8Nfautu11vapzqjs+daaf/eDk7T2GZpNm96YvTKiniHBtZICvg==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      xstate: ^4.30.6
+    dependencies:
+      '@bemedev/x-matches': 0.0.3
+      deepmerge: 4.2.2
+      dequal: 2.0.3
+      xstate: 4.35.1
+    dev: true
 
   /@blakeembrey/deque/1.0.5:
     resolution: {integrity: sha512-6xnwtvp9DY1EINIKdTfvfeAtCYw4OqBZJhtiqkT3ivjnEfa25VQ3TsKvaFfKm8MyGIEfE95qLe+bNEt3nB0Ylg==}
@@ -108,6 +136,11 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@faker-js/faker/7.6.0:
+    resolution: {integrity: sha512-XK6BTq1NDMo9Xqw/YkYyGjSsg44fbNwYRx7QK2CuoQgyy+f1rrTDHoExVM5PsyXCtfl2vs2vVJ0MN0yN6LppRw==}
+    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
     dev: true
 
   /@humanwhocodes/config-array/0.11.8:
@@ -560,6 +593,16 @@ packages:
 
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
+    dev: true
+
+  /deepmerge/4.2.2:
+    resolution: {integrity: sha512-FJ3UgI4gIl+PHZm53knsuSFpE+nESMr7M4v9QcgB7S63Kj/6WqMiFQJpBBYz1Pt+66bZpP3Q7Lye0Oo9MPKEdg==}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
+  /dequal/2.0.3:
+    resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
+    engines: {node: '>=6'}
     dev: true
 
   /diff/4.0.2:

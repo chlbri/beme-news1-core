@@ -20,30 +20,56 @@ export const MainMachine = createMachine(
       services: {} as Services,
     },
     tsTypes: {} as import('./machine.typegen').Typegen0,
+    context: {},
 
     id: 'main',
     initial: 'cache',
     states: {
       cache: {
         description: '',
-        entry: 'defaultQuery',
-        invoke: {
-          src: 'fetchArticles',
-          id: 'fetchArticles',
-          onDone: [
-            {
-              target: 'work',
-              actions: ['setDefaultArticles', 'setArticles'],
+        initial: 'local',
+        states: {
+          local: {
+            invoke: {
+              src: 'getArticles',
+              id: 'getArticles',
+              onDone: [
+                {
+                  cond: 'hasArticles',
+                  target: '#work',
+                  actions: ['setDefaultArticles', 'setArticles'],
+                },
+                { target: 'fetch' },
+              ],
+              onError: {
+                target: 'fetch',
+                actions: 'logLocalFetchError',
+              },
             },
-          ],
-          onError: [
-            {
-              target: 'work',
+          },
+          fetch: {
+            entry: 'defaultQuery',
+            invoke: {
+              src: 'fetchArticles',
+              id: 'fetchArticles',
+              onDone: [
+                {
+                  target: '#work',
+                  actions: ['setDefaultArticles', 'setArticles'],
+                },
+              ],
+              onError: [
+                {
+                  target: '#work',
+                  actions: ['logFetchError'],
+                },
+              ],
             },
-          ],
+          },
         },
       },
       work: {
+        id: 'work',
         states: {
           search: {
             initial: 'inactive',
@@ -59,13 +85,13 @@ export const MainMachine = createMachine(
                       id: 'fetchArticles',
                       onDone: [
                         {
-                          target: 'idle',
+                          target: 'busy',
                           actions: 'setArticles',
                         },
                       ],
                       onError: [
                         {
-                          target: 'idle',
+                          target: 'busy',
                         },
                       ],
                     },
@@ -76,10 +102,13 @@ export const MainMachine = createMachine(
                       },
                     },
                   },
-                  idle: {
+                  busy: {
                     after: {
-                      THROTTLE_TIME: 'loading',
+                      THROTTLE_TIME: 'idle',
                     },
+                  },
+                  idle: {
+                    always: 'loading',
                   },
                 },
               },
@@ -121,33 +150,8 @@ export const MainMachine = createMachine(
               src: 'table',
               id: 'table',
             },
+            initial: 'busy',
             on: {
-              // #region Senders
-              'TABLE/SEND/CREATE': {
-                actions: ['table/create'],
-              },
-              'TABLE/SEND/DELETE': {
-                actions: ['table/delete'],
-              },
-              'TABLE/SEND/REMOVE': {
-                actions: ['table/remove'],
-              },
-              'TABLE/SEND/UPDATE': {
-                actions: ['table/update'],
-              },
-              'TABLE/SEND/SORT': {
-                actions: ['table/sort'],
-              },
-              'TABLE/SEND/GOTO': {
-                actions: ['table/goto'],
-              },
-              'TABLE/SEND/NEXT': {
-                actions: ['table/next'],
-              },
-              'TABLE/SEND/PREVIOUS': {
-                actions: ['table/previous'],
-              },
-              // #endregion
               // #region Setters
               'TABLE/SET/ARTICLES': {
                 actions: [
@@ -160,6 +164,7 @@ export const MainMachine = createMachine(
                   'table/setCanFetchMore',
                 ],
               },
+
               'TABLE/SET/CURRENT_PAGE': {
                 actions: [
                   'table/setCurrentPage',
@@ -168,6 +173,7 @@ export const MainMachine = createMachine(
                   'table/setCanFetchMore',
                 ],
               },
+
               'TABLE/SET/PAGE_SIZE': {
                 actions: [
                   'table/setPageSize',
@@ -179,6 +185,75 @@ export const MainMachine = createMachine(
               },
               // #endregion
             },
+
+            states: {
+              busy: {
+                after: {
+                  THROTTLE_TIME: 'ready',
+                },
+              },
+              ready: {
+                on: {
+                  // #region Senders
+                  'TABLE/SEND/CREATE': {
+                    actions: ['table/create'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/DELETE': {
+                    actions: ['table/delete'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/REMOVE': {
+                    actions: ['table/remove'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/UPDATE': {
+                    actions: ['table/update'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/SORT': {
+                    actions: ['table/sort'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/GOTO': {
+                    actions: ['table/goto'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/CHANGE_PAGE_SIZE': {
+                    actions: ['table/changePageSize'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/NEXT_PAGE': {
+                    actions: ['table/next'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/PREVIOUS_PAGE': {
+                    actions: ['table/previous'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/FIRST_PAGE': {
+                    actions: ['table/gotoFirst'],
+                    target: 'busy',
+                  },
+
+                  'TABLE/SEND/LAST_PAGE': {
+                    actions: ['table/gotoLast'],
+                    target: 'busy',
+                  },
+
+                  // #endregion
+                },
+              },
+            },
           },
         },
         type: 'parallel',
@@ -188,15 +263,20 @@ export const MainMachine = createMachine(
   {
     guards: {
       hasInput: context => {
-        const input = context.search?.input;
+        const input = context.search?.input; //?
         return !!input && input.trim().length > 0;
+      },
+
+      hasArticles: (_, event) => {
+        const articles = event.data.articles;
+        return !!articles && articles.length > 0;
       },
     },
     actions: {
       defaultQuery: send('QUERY', { to: 'fetchArticles' }),
 
-      setDefaultArticles: assign((context, { data }) => {
-        context.articles = data.articles;
+      setDefaultArticles: assign((context, event) => {
+        context.defaultArticles = event.data.articles;
       }),
 
       setArticles: assign((context, event) => {
@@ -276,8 +356,12 @@ export const MainMachine = createMachine(
         { to: 'table' },
       ),
 
-      'table/next': send('NEXT', { to: 'table' }),
-      'table/previous': send('PREVIOUS', { to: 'table' }),
+      'table/changePageSize': send('CHANGE_PAGE_SIZE', { to: 'table' }),
+
+      'table/next': send('NEXT_PAGE', { to: 'table' }),
+      'table/previous': send('PREVIOUS_PAGE', { to: 'table' }),
+      'table/gotoFirst': send('FIRST_PAGE', { to: 'table' }),
+      'table/gotoLast': send('LAST_PAGE', { to: 'table' }),
       // #endregion
 
       // #region Setters
@@ -328,6 +412,9 @@ export const MainMachine = createMachine(
       // #endregion
 
       // #endregion
+    },
+    delays: {
+      THROTTLE_TIME: NUMBERS.DEFAULT_THROTTLE_TIME,
     },
   },
 );

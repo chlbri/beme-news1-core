@@ -1,4 +1,4 @@
-import { Article, Category, WithoutID } from '../types';
+import { Article, Category, WithoutID } from '~types';
 
 export type Context = {
   navigation?: {
@@ -45,8 +45,11 @@ export type TableSendEvents =
   | { type: 'TABLE/SEND/UPDATE'; article: UpdateArticle }
   | { type: 'TABLE/SEND/SORT'; sortBy: Partial<Record<Category, Sort>> }
   | { type: 'TABLE/SEND/GOTO'; page: number }
-  | { type: 'TABLE/SEND/NEXT' }
-  | { type: 'TABLE/SEND/PREVIOUS' };
+  | { type: 'TABLE/SEND/CHANGE_PAGE_SIZE'; size: number }
+  | { type: 'TABLE/SEND/NEXT_PAGE' }
+  | { type: 'TABLE/SEND/PREVIOUS_PAGE' }
+  | { type: 'TABLE/SEND/FIRST_PAGE' }
+  | { type: 'TABLE/SEND/LAST_PAGE' };
 
 export type TableSetEVents =
   | {
@@ -88,4 +91,5 @@ export type Events = NavigateEvents | SearchEvents | TableEvents;
 export type Services = {
   table: { data: unknown };
   fetchArticles: { data: { articles?: Article[] } };
+  getArticles: { data: { articles?: Article[] } };
 };
