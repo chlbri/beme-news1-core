@@ -1,9 +1,13 @@
 import { createMachine } from 'xstate';
+import { Context, Events } from './machine.types';
 
 export const MainMachine = createMachine({
   predictableActionArguments: true,
   preserveActionOrder: true,
-  schema: {},
+  schema: {
+    context: {} as Context,
+    events: {} as Events,
+  },
   tsTypes: {} as import('./machine.typegen').Typegen0,
 
   id: 'main',
