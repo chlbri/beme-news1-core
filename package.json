@@ -3,10 +3,10 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "module": "lib/index.mjs",
-  "name": "//TODO: Add a name",
+  "name": "@chlbri/beme-news1-core",
   "repository": {
     "type": "git",
-    "url": "//TODO: Add the URL"
+    "url": "https://github.com/chlbri/beme-news1-core"
   },
   "author": {
     "name": "chlbri",
