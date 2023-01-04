@@ -6,12 +6,12 @@ export function assignObject<T extends object, K extends keyof T>(
 
 export function assignObject<T extends object>(
   obj: T | undefined,
-  rest: Partial<T>,
+  rest?: Partial<T>,
 ): T & Partial<T>;
 
 export function assignObject<T extends object, K extends keyof T>(
   obj: T | undefined,
-  keyOrRest: K | Partial<T>,
+  keyOrRest?: K | Partial<T>,
   value?: T[K],
 ) {
   obj = {} as T;
@@ -27,3 +27,5 @@ export function assignObject<T extends object, K extends keyof T>(
     };
   }
 }
+
+assignObject({});
