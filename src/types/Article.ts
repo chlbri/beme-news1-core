@@ -7,6 +7,7 @@ export const articleSchema = z
   .object({
     author: z.string().nullish().default('Unknown'),
     URL: z.string().url(),
+    imageURL: z.string().url().nullish(),
     publishedAt: z.string().datetime(),
     description: z.string().nullish(),
     source: z.string(),
