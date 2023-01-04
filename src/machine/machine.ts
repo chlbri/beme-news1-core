@@ -6,8 +6,8 @@ import {
   StateFrom,
   StateValueFrom,
 } from 'xstate';
-import { NUMBERS } from '../constants';
-import { assignObject } from '../helpers';
+import { NUMBERS } from '~constants';
+import { assignObject } from '~helpers';
 import { Context, Events, Services } from './machine.types';
 
 export const MainMachine = createMachine(
