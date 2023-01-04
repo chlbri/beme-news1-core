@@ -9,6 +9,7 @@ export const articleSchema = z
     URL: z.string().url(),
     publishedAt: z.string().datetime(),
     description: z.string().nullish(),
+    imageURL: z.string().nullish(),
     source: z.string(),
     language: languageSchema,
     title: z.string(),
